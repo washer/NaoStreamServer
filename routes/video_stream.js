@@ -20,7 +20,15 @@ const init = () => {
 
     socketServer.on('connection', listen);
 
-    socketServer.broadcast = broadcast;
+    socketServer.broadcast = function(data, opts) {
+        for (var i in this.clients) {
+            if (this.clients[i].readyState === 1) {
+                this.clients[i].send(data, opts);
+            } else {
+                console.log('Error: Client (' + i + ') not connected.');
+            }
+        }
+    };
 
     // HTTP Server to accept incomming MPEG Stream
     http.createServer(initServer).listen(STREAM_PORT);
@@ -72,16 +80,6 @@ const listen = (socket) => {
     socket.on('close', function(code, message) {
         console.log('Disconnected WebSocket (' + socketServer.clients.length + ' total)');
     });
-}
-
-const broadcast = (data, opts) => {
-    for (let i in socketServer.clients) {
-        if (socketServer.clients[i].readyState === 1) {
-            socketServer.clients[i].send(data, opts);
-        } else {
-            console.log('Error: Client (' + i + ') not connected.');
-        }
-    }
 }
 
 module.exports = {
