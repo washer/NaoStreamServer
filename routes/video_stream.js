@@ -1,13 +1,12 @@
 'use strict';
 
-// TODO USE CONFIGS FOR SECRETS & PORTS etc.
-
 const ws                 = require('ws');
 const http               = require('http');
+const config             = require('../configs/stream_config.json');
 
-const STREAM_SECRET      = 'secretsauce';
-const STREAM_PORT        = 8082;
-const WEBSOCKET_PORT     = 8084;
+const STREAM_SECRET      = config.stream_secret;
+const WEBSOCKET_PORT     = config.websocket_port || 8084;
+const STREAM_PORT        = config.stream_port || 8082;
 const STREAM_MAGIC_BYTES = 'jsmp' // Must be 4 bytes
 
 let width  = 320;
