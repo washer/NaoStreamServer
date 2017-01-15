@@ -8,7 +8,7 @@ const http               = require('http');
 const STREAM_SECRET      = 'secretsauce';
 const STREAM_PORT        = 8082;
 const WEBSOCKET_PORT     = 8084;
-const STREAM_MAGIC_BYTES = 'arty' // Must be 4 bytes
+const STREAM_MAGIC_BYTES = 'jsmp' // Must be 4 bytes
 
 let width  = 320;
 let height = 240;
@@ -75,7 +75,7 @@ const listen = (socket) => {
 }
 
 const broadcast = (data, opts) => {
-    for (var i in socketServer.clients) {
+    for (let i in socketServer.clients) {
         if (socketServer.clients[i].readyState === 1) {
             socketServer.clients[i].send(data, opts);
         } else {
