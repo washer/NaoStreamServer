@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO USE CONFIGS FOR SECRETS & PORTS etc.
 
 const ws                 = require('ws');
